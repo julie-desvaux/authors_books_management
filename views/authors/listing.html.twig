@@ -1,0 +1,55 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Listing des Auteurs
+{% endblock %}
+{% block body %}
+    <table class="table text-center mt-3" id="tableauLivres">
+        <thead>
+            <tr class="table-dark">
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Nombre de livres</th>
+                <th colspan="2">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for author in authors %}
+                <tr>
+                    <td class="align-middle"><a href="/authors/{{author._id}}">{{author.firstName}}</a></td>
+                    <td class="align-middle"><a href="/authors/{{author._id}}">{{author.lastName}}</a></td>
+                    <td class="align-middle">{{author.books|length}}</td>
+                    <td class="align-middle"><a href="/authors/update/{{author._id}}" class="btn btn-warning">Modifier</a></td>
+                    <td class="align-middle">
+                        <form method="POST" action="/authors/delete/{{author._id}}" onSubmit="confirmDeleteAuthor()">
+                            <button type="submit" class="btn btn-danger">Supprimer</button></td>
+                        </form>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button onClick="displayForm()" class="btn btn-success w-100">Ajouter</button>
+    <form id="addForm" class="d-none mt-3 mb-3" method="POST" action="">
+        <fieldset>
+            <legend>Création d'un Auteur</legend>
+            <div class="form-group">
+                <label for="lastName">Nom</label>
+                <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Entrez le nom de l'auteur">
+            </div>
+            <div class="form-group">
+                <label for="firstName">Prénom</label>
+                <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Entrez le prénom de l'auteur">
+            </div>            
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" class="form-control" id="age" name="age" min="0" placeholder="Entrez l'âge de l'auteur">
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="sex" name="sex">
+                <label class="form-check-label" for="sex">Homme</label>
+            </div>
+            <button class="btn btn-primary" type="submit">Valider</button>
+        </fieldset>
+    </form>
+    <script src="/js/main.js"></script>
+{% endblock %}
